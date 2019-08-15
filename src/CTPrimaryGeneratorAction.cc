@@ -56,18 +56,16 @@ void CTPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   // from G4LogicalVolumeStore
   //
   G4double worldZHalfLength = 0.;
-  auto worldLV = G4LogicalVolumeStore::GetInstance()->GetVolume("world_volume");
+  auto worldLV = G4LogicalVolumeStore::GetInstance()->GetVolume("World");
 
   // Check that the world volume has box shape
   G4Box* worldBox = nullptr;
   if (  worldLV ) {
-      G4cout << "We found the world! " << G4endl;
     worldBox = dynamic_cast<G4Box*>(worldLV->GetSolid());
   }
 
   if ( worldBox ) {
     worldZHalfLength = worldBox->GetZHalfLength();  
-    G4cout << " worldZHalfLength = " << worldZHalfLength << G4endl;
   }
   else  {
     G4ExceptionDescription msg;
@@ -81,8 +79,8 @@ void CTPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   // Set gun position
   //  fParticleGun
   //    ->SetParticlePosition(G4ThreeVector(0., 0., -worldZHalfLength));
-  //fParticleGun
-  //  ->SetParticlePosition(G4ThreeVector(0., 0., -worldZHalfLength));
+  fParticleGun
+    ->SetParticlePosition(G4ThreeVector(0., 0., -worldZHalfLength));
 
   fParticleGun->GeneratePrimaryVertex(anEvent);
 }

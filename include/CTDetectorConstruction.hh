@@ -1,10 +1,7 @@
 // June 4, 2019: hexc, James and Nadia
 // First implementation of cosmic ray telescope simulation based on B4a example.
 //     The telescope consists of three layers of plastic scintillator
-// August 15, 2019: hexc, James and Nadia
-//     Added logical volume name for the panels
-//
-//
+
 /// \file B4DetectorConstruction.hh
 /// \brief Definition of the B4DetectorConstruction class
 
@@ -46,12 +43,6 @@ class CTDetectorConstruction : public G4VUserDetectorConstruction
     const G4VPhysicalVolume* GetScintLayer0PV() const;
     const G4VPhysicalVolume* GetScintLayer1PV() const;
     const G4VPhysicalVolume* GetScintLayer2PV() const;
-    const G4VPhysicalVolume* GetNeutronCellPV() const;
-
-    const G4LogicalVolume* GetScintLayer0LV() const;
-    const G4LogicalVolume* GetScintLayer1LV() const;
-    const G4LogicalVolume* GetScintLayer2LV() const;
-    const G4LogicalVolume* GetNeutronCellLV() const;
      
   private:
     // methods
@@ -73,8 +64,7 @@ class CTDetectorConstruction : public G4VUserDetectorConstruction
     G4double           scintX, scintY, scintZ;
     G4int                 nofLayers;
 
-    G4VPhysicalVolume  *physiScint0, *physiScint1, *physiScint2, *physiNeutronCell;
-    G4LogicalVolume  *LVScint0, *LVScint1, *LVScint2, *LVNeutronCell;
+    G4VPhysicalVolume  *physiScint0, *physiScint1, *physiScint2;
 
 };
 
@@ -92,25 +82,6 @@ inline const G4VPhysicalVolume* CTDetectorConstruction::GetScintLayer2PV() const
   return physiScint2; 
 }
 
-inline const G4VPhysicalVolume* CTDetectorConstruction::GetNeutronCellPV() const { 
-  return physiNeutronCell; 
-}
-
-inline const G4LogicalVolume* CTDetectorConstruction::GetScintLayer0LV() const { 
-  return LVScint0; 
-}
-
-inline const G4LogicalVolume* CTDetectorConstruction::GetScintLayer1LV() const { 
-  return LVScint1; 
-}
-
-inline const G4LogicalVolume* CTDetectorConstruction::GetScintLayer2LV() const { 
-  return LVScint2; 
-}
-
-inline const G4LogicalVolume* CTDetectorConstruction::GetNeutronCellLV() const { 
-  return LVNeutronCell; 
-}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

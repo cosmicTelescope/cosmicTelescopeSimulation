@@ -34,7 +34,7 @@ void CTSteppingAction::UserSteppingAction(const G4Step* step)
     // Collect energy and track length step by step
     
     // get volume of the current step
-    auto volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
+    auto volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
     
     // energy deposit
     auto edep = step->GetTotalEnergyDeposit();
@@ -45,11 +45,11 @@ void CTSteppingAction::UserSteppingAction(const G4Step* step)
 	stepLength = step->GetStepLength();
     }
     
-    if ( volume == fDetConstruction->GetScintLayer0LV() ) {
+    if ( volume == fDetConstruction->GetScintLayer0PV() ) {
 	fEventAction->AddEloss_TrackLength(0, edep,stepLength);
-    } else if (volume == fDetConstruction->GetScintLayer1LV()) {
+    } else if (volume == fDetConstruction->GetScintLayer1PV()) {
 	fEventAction->AddEloss_TrackLength(1, edep,stepLength);
-    } else if (volume == fDetConstruction->GetScintLayer2LV()) {
+    } else if (volume == fDetConstruction->GetScintLayer2PV()) {
 	fEventAction->AddEloss_TrackLength(2, edep,stepLength);
     }
 }

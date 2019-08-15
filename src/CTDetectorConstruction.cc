@@ -1,17 +1,10 @@
 // June 4, 2019: hexc, James and Nadia
 // First implementation of cosmic ray telescope simulation based on B4a example.
 //     The telescope consists of three layers of plastic scintillator
-//
 // June 5, 2019: hexc, James and Nadia
 //     Add a test code to read in gdml detector description 
 //
-// June 27, 2019: hexc, James, Chi Chi and Emily
-//     Use the 3D design as the default detector configuration
-// 
-// August 15,2019: hexc, James and Nadia
-//     Set physiScint0, physiScint1 and physiScint2 member values 
-//     based their gdml names.
-// 
+
 /// \file B4DetectorConstruction.cc
 /// \brief Implementation of the B4DetectorConstruction class
 
@@ -128,10 +121,10 @@ G4VPhysicalVolume* CTDetectorConstruction::DefineVolumes()
     // Define scintillator dimension
     scintX  = scintY = 20.*cm;
     scintZ = 1.0*cm;
-    
+
     dist12 = 10.0*cm;
     dist23 = 20.0*cm;
-    
+
     // Get materials
     auto defaultMaterial = G4Material::GetMaterial("Air");
     auto scintMaterial = G4Material::GetMaterial("scintillator");
@@ -143,56 +136,47 @@ G4VPhysicalVolume* CTDetectorConstruction::DefineVolumes()
 	G4Exception("CTDetectorConstruction::DefineVolumes()",
 		    "MyCode0001", FatalException, msg);
     }  
-    
-    
+
+    /*
     // Read in gdml detector description
     G4GDMLParser parser;
-    //    parser.Read( "muonNeutronTelescope.gdml" );
-    //    parser.Read( "MuonDetectorTelescope_v1.gdml" );
-    //    parser.Read( "FullAssemblyNeutronCell.gdml" );
-    //    parser.Read( "MuonDetectorTelescope_v2.gdml");
-    //    parser.Read( "muonTelescope_v4.gdml");
-    parser.Read( "muonNeutronTelescope_v4.gdml");
+    parser.Read( "muonNeutronTelescope.gdml" );
     G4cout << "Geometry loaded from  file .......muonNeutronTelescope.gdml " << G4endl;
     
     G4VPhysicalVolume* WorldLV = parser.GetWorldVolume();
     G4LogicalVolume* W_log = WorldLV->GetLogicalVolume();
     W_log->SetMaterial(defaultMaterial);
 
-    LVScint0 = parser.GetVolume("panel0_EJ200");
-    LVScint1 = parser.GetVolume("panel1_EJ200");
-    LVScint2 = parser.GetVolume("panel2_EJ200");
-
     return WorldLV;
-    
-    /*
+    */
+
     //     
     // World
     //
     auto worldS 
-    = new G4Box("World",           // its name
-    worldSizeX/2, worldSizeY/2, worldSizeZ/2); // its size
+	= new G4Box("World",           // its name
+		    worldSizeX/2, worldSizeY/2, worldSizeZ/2); // its size
     
     auto worldLV
-    = new G4LogicalVolume(
-    worldS,           // its solid
-    defaultMaterial,  // its material
-    "World");         // its name
+	= new G4LogicalVolume(
+			      worldS,           // its solid
+			      defaultMaterial,  // its material
+			      "World");         // its name
     
     auto physiWorld
-    = new G4PVPlacement(
-    0,                // no rotation
-    G4ThreeVector(),  // at (0,0,0)
-    worldLV,          // its logical volume                         
-    "World",          // its name
-    0,                // its mother  volume
-    false,            // no boolean operation
-    0,                // copy number
-    fCheckOverlaps);  // checking overlaps     
-    //                                 
-    // Layer
-    //
-    auto scintLayer0 
+	= new G4PVPlacement(
+			    0,                // no rotation
+			    G4ThreeVector(),  // at (0,0,0)
+			    worldLV,          // its logical volume                         
+			    "World",          // its name
+			    0,                // its mother  volume
+			    false,            // no boolean operation
+			    0,                // copy number
+			    fCheckOverlaps);  // checking overlaps     
+  //                                 
+  // Layer
+  //
+  auto scintLayer0 
       = new G4Box("scintLayer0",           // its name
 		  scintX/2, scintY/2, scintZ/2); // its size
   
@@ -272,7 +256,6 @@ G4VPhysicalVolume* CTDetectorConstruction::DefineVolumes()
   //
   return physiWorld;
 
-  */
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
