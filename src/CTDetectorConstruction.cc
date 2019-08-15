@@ -152,7 +152,7 @@ G4VPhysicalVolume* CTDetectorConstruction::DefineVolumes()
     //    parser.Read( "FullAssemblyNeutronCell.gdml" );
     //    parser.Read( "MuonDetectorTelescope_v2.gdml");
     //    parser.Read( "muonTelescope_v4.gdml");
-    parser.Read( "muonNeutronTelescope_v4.gdml");
+    parser.Read( "muonNeutronTelescope_v5.gdml");
     G4cout << "Geometry loaded from  file .......muonNeutronTelescope.gdml " << G4endl;
     
     G4VPhysicalVolume* WorldLV = parser.GetWorldVolume();

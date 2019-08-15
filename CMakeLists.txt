@@ -54,8 +54,6 @@ set(CT_SCRIPTS
   run1.mac
   run2.mac
   vis.mac
-  muonNeutronTelescope.gdml
-  muonNeutronTelescope_Aluminum.gdml
   )
 
 foreach(_script ${CT_SCRIPTS})
