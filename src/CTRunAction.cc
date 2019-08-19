@@ -1,9 +1,13 @@
 // June 4, 2019: hexc, James and Nadia
 // First implementation of cosmic ray telescope simulation based on B4a example.
 //     The telescope consists of three layers of plastic scintillator
+//
 // June 6, 2019: hexc, James, Nadia and Chi-Chi
 //     Define output histograms and ntuple for offline analysis
 //
+//August 19, 2019: hexc, James and Nadia
+//     Add Eloss and trackLength for neutron cell in the ntuple and
+//     create histograms  
 //
 /// \file B4RunAction.cc
 /// \brief Implementation of the B4RunAction class
@@ -41,13 +45,15 @@ CTRunAction::CTRunAction()
     //
     
     // Creating histograms
-    analysisManager->CreateH1("ElossLayer0","Edep in layer 0", 100, 0., 10*MeV);
-    analysisManager->CreateH1("ElossLayer1","Edep in layer 1", 100, 0., 10*MeV);
-    analysisManager->CreateH1("ElossLayer2","Edep in layer 2", 100, 0., 10*MeV);
+    analysisManager->CreateH1("ElossLayer0","Edep in layer 0", 100, 0., 20*MeV);
+    analysisManager->CreateH1("ElossLayer1","Edep in layer 1", 100, 0., 20*MeV);
+    analysisManager->CreateH1("ElossLayer2","Edep in layer 2", 100, 0., 20*MeV);
+    analysisManager->CreateH1("ElossNeutronCell","Edep in neutronCell", 100, 0., 20*MeV);
 
-    analysisManager->CreateH1("LengthLayer0","trackL in layer 0", 100, 0., 2*cm);    
-    analysisManager->CreateH1("LengthLayer1","trackL in layer 1", 100, 0., 2*cm);
-    analysisManager->CreateH1("LengthLayer2","trackL in layer 2", 100, 0., 2*cm);
+    analysisManager->CreateH1("LengthLayer0","trackL in layer 0", 100, 0., 10*cm);    
+    analysisManager->CreateH1("LengthLayer1","trackL in layer 1", 100, 0., 10*cm);
+    analysisManager->CreateH1("LengthLayer2","trackL in layer 2", 100, 0., 10*cm);
+    analysisManager->CreateH1("LengthNeutronCell","trackL in neutronCell", 100, 0., 10*cm);
     
     // Creating ntuple
     //
@@ -55,9 +61,11 @@ CTRunAction::CTRunAction()
     analysisManager->CreateNtupleDColumn("ElossLayer0");
     analysisManager->CreateNtupleDColumn("ElossLayer1");
     analysisManager->CreateNtupleDColumn("ElossLayer2");
+    analysisManager->CreateNtupleDColumn("ElossNeutronCell");
     analysisManager->CreateNtupleDColumn("LengthLayer0");
     analysisManager->CreateNtupleDColumn("LengthLayer1");
     analysisManager->CreateNtupleDColumn("LengthLayer2");
+    analysisManager->CreateNtupleDColumn("LengthNeutronCell");
     analysisManager->FinishNtuple();
 }
 
@@ -65,7 +73,7 @@ CTRunAction::CTRunAction()
 
 CTRunAction::~CTRunAction()
 {
-  delete G4AnalysisManager::Instance();  
+  delete G4AnalysisManager::Instance();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -99,7 +107,8 @@ void CTRunAction::EndOfRunAction(const G4Run* /*run*/)
     else {
       G4cout << "for the local thread " << G4endl << G4endl; 
     }
-    
+  
+    // Output scintillator panel Eloss and TrackLength  
     for (int i = 0; i<3; i++)
 	{
 	    G4cout << " ElossLayer(" << i <<") : mean = " 
@@ -111,7 +120,18 @@ void CTRunAction::EndOfRunAction(const G4Run* /*run*/)
 		   << G4BestUnit(analysisManager->GetH1(i+3)->mean(), "Length") 
 		   << " rms = " 
 		   << G4BestUnit(analysisManager->GetH1(i+3)->rms(),  "Length") << G4endl;
-	}	    
+	}
+
+    // Output energy loss and tracklength in neutron cell
+    G4cout << " ElossNeutronCell : mean = " 
+	   << G4BestUnit(analysisManager->GetH1(3)->mean(), "Energy") 
+	   << " rms = " 
+	   << G4BestUnit(analysisManager->GetH1(3)->rms(),  "Energy") << G4endl;
+    
+    G4cout << " LengthNeutronCell :  mean = " 
+	   << G4BestUnit(analysisManager->GetH1(7)->mean(), "Length") 
+	   << " rms = " 
+	   << G4BestUnit(analysisManager->GetH1(7)->rms(),  "Length") << G4endl;
   }
   
   // save histograms & ntuple

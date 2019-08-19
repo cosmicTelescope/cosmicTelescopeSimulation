@@ -162,6 +162,7 @@ G4VPhysicalVolume* CTDetectorConstruction::DefineVolumes()
     LVScint0 = parser.GetVolume("panel0_EJ200");
     LVScint1 = parser.GetVolume("panel1_EJ200");
     LVScint2 = parser.GetVolume("panel2_EJ200");
+    LVNeutronCell = parser.GetVolume("neutronCell_BC505");
 
     return WorldLV;
     

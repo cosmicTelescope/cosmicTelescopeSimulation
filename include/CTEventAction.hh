@@ -29,10 +29,11 @@ class CTEventAction : public G4UserEventAction
     virtual void    EndOfEventAction(const G4Event* event);
     
     void AddEloss_TrackLength(G4int n, G4double de, G4double dl);
+    void AddEloss_TrackLength_NeutronCell(G4double de, G4double dl);
     
   private:
-    G4double  fEnergyLayer[nLayer];  
-    G4double  fTrackLayer[nLayer]; 
+    G4double  fEnergyLayer[nLayer], fEnergyNeutronCell;  
+    G4double  fTrackLayer[nLayer], fTrackNeutronCell; 
 };
 
 // inline functions
@@ -40,6 +41,11 @@ class CTEventAction : public G4UserEventAction
 inline void CTEventAction::AddEloss_TrackLength(G4int layer, G4double de, G4double dl) {
   fEnergyLayer[layer] += de; 
   fTrackLayer[layer] += dl;
+}
+
+inline void CTEventAction::AddEloss_TrackLength_NeutronCell(G4double de, G4double dl) {
+  fEnergyNeutronCell += de; 
+  fTrackNeutronCell += dl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

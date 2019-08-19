@@ -4,7 +4,6 @@
 // August 15, 2019: hexc, James and Nadia
 //     Added logical volume name for the panels
 //
-//
 /// \file B4DetectorConstruction.hh
 /// \brief Definition of the B4DetectorConstruction class
 

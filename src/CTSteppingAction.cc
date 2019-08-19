@@ -1,6 +1,8 @@
 // June 4, 2019: hexc, James and Nadia
-// First implementation of cosmic ray telescope simulation based on B4a example.
+//     First implementation of cosmic ray telescope simulation based on B4a example.
 //     The telescope consists of three layers of plastic scintillator
+// August 19, 2019: hexc, James and Nadia
+//     Add energy loss and track length record for neutron cell 
 // 
 /// \file B4aSteppingAction.cc
 /// \brief Implementation of the B4aSteppingAction class
@@ -51,6 +53,8 @@ void CTSteppingAction::UserSteppingAction(const G4Step* step)
 	fEventAction->AddEloss_TrackLength(1, edep,stepLength);
     } else if (volume == fDetConstruction->GetScintLayer2LV()) {
 	fEventAction->AddEloss_TrackLength(2, edep,stepLength);
+    } else if (volume == fDetConstruction->GetNeutronCellLV()) {
+	fEventAction->AddEloss_TrackLength_NeutronCell(edep,stepLength);
     }
 }
 
