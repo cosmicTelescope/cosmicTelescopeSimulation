@@ -57,7 +57,7 @@ CTRunAction::CTRunAction()
     
     // Creating ntuple
     //
-    analysisManager->CreateNtuple("CT", "Edep and TrackL");
+    analysisManager->CreateNtuple("CT", "cosmic ray telescope");
     analysisManager->CreateNtupleDColumn("ElossLayer0");
     analysisManager->CreateNtupleDColumn("ElossLayer1");
     analysisManager->CreateNtupleDColumn("ElossLayer2");
@@ -66,6 +66,14 @@ CTRunAction::CTRunAction()
     analysisManager->CreateNtupleDColumn("LengthLayer1");
     analysisManager->CreateNtupleDColumn("LengthLayer2");
     analysisManager->CreateNtupleDColumn("LengthNeutronCell");
+    analysisManager->CreateNtupleDColumn("pID");
+    analysisManager->CreateNtupleDColumn("EKin");
+    analysisManager->CreateNtupleDColumn("xPos");
+    analysisManager->CreateNtupleDColumn("yPos");
+    analysisManager->CreateNtupleDColumn("zPos");
+    analysisManager->CreateNtupleDColumn("xVec");
+    analysisManager->CreateNtupleDColumn("yVec");
+    analysisManager->CreateNtupleDColumn("zVec");
     analysisManager->FinishNtuple();
 }
 
