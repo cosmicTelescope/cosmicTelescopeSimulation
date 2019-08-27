@@ -40,7 +40,7 @@ class CTEventAction : public G4UserEventAction
 
 inline void CTEventAction::AddEloss_TrackLength(G4int layer, G4double de, G4double dl) {
   fEnergyLayer[layer] += de; 
-  fTrackLayer[layer] += dl;
+  fTrackLayer[layer] += dl;  
 }
 
 inline void CTEventAction::AddEloss_TrackLength_NeutronCell(G4double de, G4double dl) {
